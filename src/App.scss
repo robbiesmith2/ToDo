@@ -1,0 +1,385 @@
+$heading: #263238;
+$text: #263238;
+
+@mixin blue-button {
+  background: #03A9F4;
+  color: white;
+
+  &:hover {
+    &:before {
+      background: #1E88E5;
+    }
+  }
+}
+
+@mixin green-button {
+  background: #4CAF50;
+  color: white;
+
+  &:hover {
+    &:before {
+      background: #388E3C;
+    }
+  }
+}
+
+@mixin green-button-icon {
+  svg {
+    background: #81C784;
+    color: #E8F5E9;
+  }
+}
+
+@mixin red-button {
+  background: #e57373;
+  color: white;
+
+  &:hover {
+    &:before {
+      background: #ef5350;
+    }
+  }
+}
+
+body {
+  height: 100vh;
+  color: $text;
+}
+
+#root {
+  height: 100vh;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0 0 1em 0;
+  color: $heading;
+}
+
+input,
+textarea {
+  outline: 0;
+  padding: 0.5rem;
+  font-family: inherit;
+  border-radius: 3px;
+  display: block;
+  border: 1px solid transparent;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+
+  &[type=textarea] {
+    height: 100px;
+    overflow-x: scroll;
+  }
+
+  &:focus {
+    background: #E0F7FA;
+    border: 1px solid #80DEEA;
+  }
+}
+
+label {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  height: 46px;
+  font-size: 1.1rem;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-right: 1rem;
+  border-radius: 3px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  &:before {
+    position: absolute;
+    width: 0;
+    height: 100%;
+    left: 0;
+    content: '';
+    transition: all 0.2s ease-in-out;
+    border-radius: 3px;
+    z-index: 0;
+  }
+
+  &:hover {
+    &:before {
+      width: 100%;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    border: 0;
+  }
+
+  &[disabled] {
+    background: #EEEEEE;
+    color: #9E9E9E;
+    opacity: 0.5;
+
+    &:before {
+      display: none;
+    }
+
+    svg {
+      background: transparent;
+      color: #9E9E9E;
+    }
+
+    &:hover {
+      background: #EEEEEE;
+    }
+  }
+  
+  svg {
+    z-index: 1;
+  }
+
+  &--green {
+    @include green-button;
+  }
+
+  &--blue {
+    @include blue-button;
+  }
+
+  &--with-icon {
+    @include green-button-icon;
+    padding: 0 1rem 0 0;
+    border: {
+      width: 0;
+      top-left-radius: 23px;
+      bottom-left-radius: 23px;
+      top-right-radius: 3px;
+      bottom-right-radius: 3px;
+    }
+
+    svg {
+      transition: all 0.2s ease-in-out;
+      height: 46px;
+      width: 46px;
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
+
+    &:hover {
+      &:before {
+        width: calc(100% - 23px);
+        left: 23px;
+      }
+  
+      svg {
+        height: 55px;
+        width: 55px;
+        
+      }
+    }
+  }
+
+  span {
+    z-index: 1;
+  }
+
+  svg {
+    margin-right: 0.5rem;
+  }
+
+  &--cancel {
+    @include red-button;
+  }
+}
+
+.app-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+  height: 100%;
+}
+
+.sidebar {
+  padding: 2rem 0 0 2rem;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    margin-bottom: 1rem;
+  }
+
+  .button-cluster {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      
+      &:hover {
+        font-weight: bold;
+      }
+    }
+
+    .active {
+      font-weight: bold;
+      border-right: 4px solid #AB47BC;
+    }
+  }
+
+  button {
+    text-align: left;
+    outline: none;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    padding: 1rem 0.5rem;
+    margin-right: 0;
+  }
+}
+
+.main {
+  padding: 2rem;
+  background: #455A64;
+  overflow-y: scroll;
+}
+
+.addtask {
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  background: rgba(84,110,122 ,0.9);
+
+  &__wrapper {
+    width: 800px;
+    background: #CFD8DC;
+    border: 0;
+    padding: 1rem;
+    position: relative;
+    border-radius: 5px;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h3 {
+    flex: 1 1 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
+
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+.task-list {
+  margin: 2rem 0;
+
+  &__heading {
+    color: white;
+  }
+}
+
+.taskitem {
+  background: white;
+  border: 1px solid #B0BEC5;
+  padding: 1rem;
+  position: relative;
+  border-radius: 5px;
+  margin: 1rem 0;
+  position: relative;
+
+  h4 {
+    text-transform: capitalize;
+  }
+
+  &--complete {
+    background: #BDBDBD;
+
+    h4, p {
+      text-decoration: line-through;
+      color: #607D8B;
+    }
+  }
+
+  &__complete-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    svg {
+      position: relative;
+      color: white;
+      padding: 0.2rem;
+      font-size: 2rem;
+      z-index: 2;
+    }
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 0;
+      border: {
+        top: 2rem solid #00E676;
+        left: 2rem solid transparent;
+        right: 2rem solid #00E676;
+        bottom: 2rem solid transparent;
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 0.25rem 1rem;
+  }
+}
+
+.edittask {
+  display: flex;
+  flex-direction: column;
+
+  input, textarea {
+    background: #F5F5F5;
+    border: 1px solid #E0E0E0;
+
+    &:focus {
+      background: #E0F7FA;
+      border: 1px solid #80DEEA;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+
+    button:last-of-type {
+      margin-right: 0;
+    }
+  }
+}
